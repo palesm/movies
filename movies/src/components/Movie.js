@@ -1,8 +1,15 @@
 import React from 'react';
+import {ListItem, ListItemText} from "@mui/material";
 
 function Movie(props) {
   return (
-    <div>im a movie</div>
+    <>
+      <ListItem>
+        <ListItemText>
+          {props.name}
+        </ListItemText>
+      </ListItem>
+    </>
   );
 }
 

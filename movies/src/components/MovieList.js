@@ -3,11 +3,9 @@ import Movie from "./Movie";
 
 function MovieList(props) {
   return (
-    <div>im a movieList
-      <Movie />
-      <Movie />
-      <Movie />
-    </div>
+    <>
+      {props.movies.map(movie => <Movie key={movie.id} {...movie} />)}
+    </>
   );
 }
 
