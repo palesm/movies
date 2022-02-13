@@ -17,6 +17,12 @@ const styles = ( {
     justifyContent: 'center',
     alignItems: 'center',
     height: '100vh'
+  },
+  title: {
+    cursor: 'pointer'
+  },
+  noResult: {
+    paddingTop: '10px'
   }
 })
 

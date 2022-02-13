@@ -12,7 +12,13 @@ function SearchMovie(props) {
   return (
     <Paper>
       <form onSubmit={handleSubmit}>
-        <TextField value={movie} onChange={setMovie} label={'Search for a movie...'} fullWidth />
+        <TextField
+          value={movie}
+          onChange={setMovie}
+          label={'Search for a movie...'}
+          fullWidth
+          required
+        />
       </form>
     </Paper>
   );
