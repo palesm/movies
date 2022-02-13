@@ -51,6 +51,9 @@ function Movie(props) {
       }
     })
   }
+  const handleRelated = () => {
+    props.handleRelated(props.id)
+  }
   useEffect(() => {
     return () => {
       setLoading(false)
@@ -94,7 +97,7 @@ function Movie(props) {
                   IMDB
                 </Button>
               }
-              <Button variant="contained" color={"primary"}>
+              <Button variant="contained" color={"primary"} onClick={handleRelated}>
                 Related
               </Button>
             </Stack>

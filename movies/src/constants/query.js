@@ -13,3 +13,20 @@ export const GET_MOVIES = gql`
         }
     }
 `;
+
+export const GET_RELATED = gql`
+    query getMovie($id: ID!) {
+        movie(id: $id) {
+            similar {
+                id
+                name
+                genres {
+                    id
+                    name
+                } score
+            }
+        }
+    }
+`;
+
+

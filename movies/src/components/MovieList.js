@@ -4,7 +4,7 @@ import Movie from "./Movie";
 function MovieList(props) {
   return (
     <>
-      {props.movies.map(movie => <Movie key={movie.id} {...movie} />)}
+      {props.movies.map(movie => <Movie key={movie.id} {...movie} handleRelated={props.handleRelated} />)}
     </>
   );
 }
