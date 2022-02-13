@@ -3,8 +3,8 @@ import * as api from "../api/api";
 import useToggleState from "../hooks/useToggleState";
 import {getPageName} from "../helpers/helpers";
 import {Chip, ListItemButton, ListItemSecondaryAction, Stack} from "@mui/material";
-import {Button, Collapse, Divider, Grid} from "@material-ui/core";
-import {ExpandLess, ExpandMore}  from '@mui/icons-material';
+import {Button, Collapse, Grid} from "@material-ui/core";
+import {ExpandLess, ExpandMore} from '@mui/icons-material';
 import {withStyles} from "@mui/styles";
 import styles from "../assets/styles/MovieStyles";
 
@@ -57,16 +57,16 @@ function Movie(props) {
     };
   }, [description]);
   return (
-    <div>
+    <div className={classes.container}>
       <Grid container>
-        <ListItemButton onClick={handleClick}>
+        <ListItemButton onClick={handleClick} className={classes.listItemButtons}>
           {clicked ? <ExpandLess /> : <ExpandMore />}
-          <Grid item xs={6}>
+          <Grid item xs={6} className={classes.title}>
             {props.name}
           </Grid>
           <Grid item xs={4}>
             <Stack direction="row" spacing={0.5}>
-              {props.genres.map(g => <Chip label={g.name} key={g.id} />)}
+              {props.genres.map(g => <Chip label={g.name} key={g.id} color={"primary"}/>)}
             </Stack>
           </Grid>
           <ListItemSecondaryAction>
@@ -81,22 +81,22 @@ function Movie(props) {
           <div>loading...</div>
           :
           <>
-            <Stack direction="row" spacing={2}>
+            <Stack direction="row" spacing={2} className={classes.buttonContainer}>
               {url &&
-                <Button variant="contained" href={url} target="_blank">
+                <Button variant="contained" href={url} target="_blank" color={"primary"}>
                   Wikipedia
                 </Button>
               }
               {imdb &&
-                <Button variant="contained" href={imdb} target="_blank">
+                <Button variant="contained" href={imdb} target="_blank" color={"primary"}>
                   IMDB
                 </Button>
               }
-              <Button variant="contained">
+              <Button variant="contained" color={"primary"}>
                 Related
               </Button>
             </Stack>
-            <Grid container>
+            <Grid container className={classes.gridContainer}>
               <Grid item xs={12}>
                 {description}
               </Grid>
@@ -104,7 +104,6 @@ function Movie(props) {
           </>
         }
       </Collapse>
-      <Divider light />
     </div>
   );
 }
