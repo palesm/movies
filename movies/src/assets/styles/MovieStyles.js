@@ -17,6 +17,20 @@ const styles = ( {
   },
   buttonContainer: {
     paddingTop: '5px !important'
+  },
+  spinnerContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+    paddingTop: '10px'
+  },
+  chipContainer: {
+    flexWrap: 'wrap'
+  },
+  chip: {
+    marginTop: '1em',
+    marginBottom: '1em'
   }
 })
 

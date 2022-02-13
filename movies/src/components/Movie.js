@@ -3,7 +3,7 @@ import * as api from "../api/api";
 import useToggleState from "../hooks/useToggleState";
 import {getPageName} from "../helpers/helpers";
 import {Chip, ListItemButton, ListItemSecondaryAction, Stack} from "@mui/material";
-import {Button, Collapse, Grid} from "@material-ui/core";
+import {Box, Button, CircularProgress, Collapse, Grid} from "@material-ui/core";
 import {ExpandLess, ExpandMore} from '@mui/icons-material';
 import {withStyles} from "@mui/styles";
 import styles from "../assets/styles/MovieStyles";
@@ -64,13 +64,13 @@ function Movie(props) {
           <Grid item xs={6} className={classes.title}>
             {props.name}
           </Grid>
-          <Grid item xs={4}>
-            <Stack direction="row" spacing={0.5}>
-              {props.genres.map(g => <Chip label={g.name} key={g.id} color={"primary"}/>)}
+          <Grid item xs={5}>
+            <Stack direction="row" spacing={0.5} className={classes.chipContainer}>
+              {props.genres.map(g => <Chip label={g.name} key={g.id} color={"primary"} />)}
             </Stack>
           </Grid>
           <ListItemSecondaryAction>
-            <Grid item xs={2} aria-label='imdb'>
+            <Grid item xs={1} aria-label='imdb'>
               {props.score}
             </Grid>
           </ListItemSecondaryAction>
@@ -78,7 +78,9 @@ function Movie(props) {
       </Grid>
       <Collapse in={clicked} timeout="auto" unmountOnExit>
         {loading ?
-          <div>loading...</div>
+          <Box className={classes.spinnerContainer}>
+            <CircularProgress />
+          </Box>
           :
           <>
             <Stack direction="row" spacing={2} className={classes.buttonContainer}>

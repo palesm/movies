@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
 import {AppBar, Grid, Paper, Toolbar, Typography} from "@mui/material";
 import SearchMovie from "./SearchMovie";
-import "../assets/css/movie-app.css"
 import MovieList from "./MovieList";
 import {useLazyQuery} from "@apollo/client";
 import {GET_MOVIES} from "../constants/query";
+import {Box, CircularProgress, withStyles} from "@material-ui/core";
+import styles from "../assets/styles/MovieAppStyles";
 
 
 function MovieApp(props) {
+  const {classes} = props;
   const [movies, setMovies] = useState(null);
   const [getData, { loading, data }] = useLazyQuery(GET_MOVIES);
   const searchMovie = (query) => {
@@ -17,15 +19,19 @@ function MovieApp(props) {
       }
     })
   }
-  if (loading) return <div>loading...</div>
+  if (loading) return (
+    <Box className={classes.spinnerContainer}>
+      <CircularProgress />
+    </Box>
+  )
   return (
-    <Paper elevation={0}>
-      <AppBar>
+    <Paper className={classes.paper} elevation={0}>
+      <AppBar className={classes.appBar}>
         <Toolbar>
           <Typography>Movies App</Typography>
         </Toolbar>
       </AppBar>
-      <Grid container className="grid-container">
+      <Grid container className={classes.gridContainer}>
         <Grid item lg={6} md={8} xs={10}>
           <SearchMovie searchMovie={searchMovie} />
           {movies && <MovieList movies={movies} />}
@@ -35,4 +41,4 @@ function MovieApp(props) {
   );
 }
 
-export default MovieApp;
+export default withStyles(styles)(MovieApp);
