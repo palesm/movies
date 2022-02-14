@@ -10,6 +10,7 @@ import styles from "../assets/styles/MovieAppStyles";
 function MovieApp(props) {
   const {classes} = props;
   const [movies, setMovies] = useState(null);
+  const [searchInfo, setSearchInfo] = useState(null);
   const [noResult, setNoResult] = useState(false);
   const [noRelated, setNoRelated] = useState(false);
   const [getData, { loading: loading, data }] = useLazyQuery(GET_MOVIES);
@@ -18,9 +19,11 @@ function MovieApp(props) {
     setNoResult(false);
     setNoRelated(false);
     setMovies(null);
+    setSearchInfo(null)
   }
   const searchMovie = (query) => {
     clearResults()
+    setSearchInfo(`Search results for '${query}':`)
     getData({variables: { query: query }}).then(r => {
       let movies = r?.data?.searchMovies
       if (movies?.length === 0) {
@@ -28,8 +31,9 @@ function MovieApp(props) {
       } else setMovies(movies);
     })
   }
-  const handleRelated = (id) => {
+  const handleRelated = (id, name) => {
     setMovies(null)
+    setSearchInfo(`Movies related to ${name}:`)
     getRelated({variables: { id: id }}).then(r => {
       let related = r?.data?.movie?.similar
       if(related?.length === 0) {
@@ -52,6 +56,7 @@ function MovieApp(props) {
       <Grid container className={classes.gridContainer}>
         <Grid item lg={6} md={8} xs={10}>
           <SearchMovie searchMovie={searchMovie} />
+          {searchInfo &&  <Typography className={classes.searchInfo}>{searchInfo}</Typography>}
           {(noResult || noRelated) && <Typography className={classes.notFound}>No {noRelated && 'related '} movies found.</Typography>}
           {movies && <MovieList movies={movies} handleRelated={handleRelated} />}
         </Grid>

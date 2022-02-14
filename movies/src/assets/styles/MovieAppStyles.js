@@ -23,6 +23,9 @@ const styles = ( {
   },
   notFound: {
     paddingTop: '10px'
+  },
+  searchInfo: {
+    paddingTop: '20px',
   }
 })
 

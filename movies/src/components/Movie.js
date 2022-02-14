@@ -49,7 +49,7 @@ function Movie(props) {
     })
   }
   const handleRelated = () => {
-    props.handleRelated(props.id)
+    props.handleRelated(props.id, props.name)
   }
   useEffect(() => {
     return () => {
