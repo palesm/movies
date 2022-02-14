@@ -34,11 +34,9 @@ function Movie(props) {
         let pageName = getPageName(url);
         setUrl(url);
         // get short description by page name
-        api.getWikiContent(pageName).then(res => {
-          if (res.data && res.data.query.pages[0].extract) {
-            let description = res.data.query.pages[0].extract
-            setDescription(description)
-          } else setLoading(false)
+        pageName && api.getWikiContent(pageName).then(res => {
+          let description = res?.data?.query?.pages?.[0]?.extract
+          description && setDescription(description)
         })
       } else setLoading(false)
     })
@@ -46,9 +44,8 @@ function Movie(props) {
   const handleImdb = () => {
     //search movie by name from imdb
     api.searchImdb(props.name).then(res => {
-      if(res.data && res.data.imdbID) {
-        setImdb(`https://www.imdb.com/title/${res.data.imdbID}`)
-      }
+      let imdbID = res?.data?.imdbID
+      imdbID && setImdb(`https://www.imdb.com/title/${imdbID}`)
     })
   }
   const handleRelated = () => {

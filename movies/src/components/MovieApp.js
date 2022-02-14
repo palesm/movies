@@ -7,33 +7,34 @@ import {GET_MOVIES, GET_RELATED} from "../constants/query";
 import {Box, CircularProgress, withStyles} from "@material-ui/core";
 import styles from "../assets/styles/MovieAppStyles";
 
-
 function MovieApp(props) {
   const {classes} = props;
   const [movies, setMovies] = useState(null);
   const [noResult, setNoResult] = useState(false);
+  const [noRelated, setNoRelated] = useState(false);
   const [getData, { loading: loading, data }] = useLazyQuery(GET_MOVIES);
   const [getRelated, { loading: relatedLoading, related }] = useLazyQuery(GET_RELATED);
   const clearResults = () => {
     setNoResult(false);
+    setNoRelated(false);
     setMovies(null);
   }
   const searchMovie = (query) => {
     clearResults()
     getData({variables: { query: query }}).then(r => {
-      if (r.data && r.data.searchMovies) {
-        if (r.data.searchMovies.length === 0) {
-          setNoResult(true)
-        } else setMovies(r.data.searchMovies);
-      }
+      let movies = r?.data?.searchMovies
+      if (movies?.length === 0) {
+        setNoResult(true)
+      } else setMovies(movies);
     })
   }
   const handleRelated = (id) => {
     setMovies(null)
     getRelated({variables: { id: id }}).then(r => {
-      if (r.data && r.data.movie.similar) {
-        setMovies(r.data.movie.similar);
-      }
+      let related = r?.data?.movie?.similar
+      if(related?.length === 0) {
+        setNoRelated(true)
+      } else related && setMovies(related);
     })
   }
   if (loading || relatedLoading) return (
@@ -51,7 +52,7 @@ function MovieApp(props) {
       <Grid container className={classes.gridContainer}>
         <Grid item lg={6} md={8} xs={10}>
           <SearchMovie searchMovie={searchMovie} />
-          {noResult && <Typography className={classes.noResult}>No results found.</Typography>}
+          {(noResult || noRelated) && <Typography className={classes.notFound}>No {noRelated && 'related '} movies found.</Typography>}
           {movies && <MovieList movies={movies} handleRelated={handleRelated} />}
         </Grid>
       </Grid>

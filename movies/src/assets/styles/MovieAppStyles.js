@@ -21,7 +21,7 @@ const styles = ( {
   title: {
     cursor: 'pointer'
   },
-  noResult: {
+  notFound: {
     paddingTop: '10px'
   }
 })

@@ -4,7 +4,7 @@ function spaceToUnderscore(string) {
 
 function getPageName(url) {
   let arr = url && url.split('/')
-  return arr && arr.length > 4 && arr[4];
+  return arr?.[4];
 }
 
 export {spaceToUnderscore, getPageName};
